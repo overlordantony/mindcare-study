@@ -134,10 +134,3 @@ Clase creada para probar todas las funcionalidades antes de integrar la GUI.
 
 ---
 
-## 💻 ¿Cómo ejecutar el proyecto?
-
-1. **Clona el repositorio:**
-
-```bash
-git clone https://github.com/tu_usuario/MindCare.git
-cd MindCare
