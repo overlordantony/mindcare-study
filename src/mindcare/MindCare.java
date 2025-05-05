@@ -1,20 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
 package mindcare;
 
-/**
- *
- * @author MAOZ-
- */
+import mindcare.ui.LoginFrame;
+import java.io.File;
+
 public class MindCare {
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
-        Test.main(args);
+        verificarYCrearSeeds();
+        new LoginFrame();
     }
-    
+
+    private static void verificarYCrearSeeds() {
+        boolean cargarSeeds = false;
+
+        // Verificar psicologos.txt
+        File archivoPsicologos = new File("psicologos.txt");
+        if (!archivoPsicologos.exists() || archivoPsicologos.length() == 0) {
+            cargarSeeds = true;
+        }
+
+        // Verificar pacientes.txt
+        File archivoPacientes = new File("pacientes.txt");
+        if (!archivoPacientes.exists() || archivoPacientes.length() == 0) {
+            cargarSeeds = true;
+        }
+
+        if (cargarSeeds) {
+            System.out.println("Cargando datos iniciales...");
+            Seeds.main(null);
+        } else {
+            System.out.println("Datos ya existen, no se cargan Seeds.");
+        }
+    }
 }
