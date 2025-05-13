@@ -28,6 +28,7 @@ public class AtenderCitaFrame extends JFrame {
         // Colores y fuentes
         Color labelColor = Color.decode("#4B4B4B");
         Color buttonColor = Color.decode("#1E90FF");
+        Color secondaryButtonColor = Color.decode("#E51A4C");
         Font labelFont = new Font("Segoe UI", Font.PLAIN, 16);
         Font buttonFont = new Font("Segoe UI", Font.PLAIN, 16);
 
@@ -90,7 +91,7 @@ public class AtenderCitaFrame extends JFrame {
         buttonsPanel.setBackground(Color.WHITE);
 
         JButton guardarButton = createStyledButton("Guardar", buttonColor, buttonFont);
-        JButton cancelarButton = createStyledButton("Cancelar", buttonColor, buttonFont);
+        JButton cancelarButton = createStyledButton("Cancelar", secondaryButtonColor, buttonFont);
 
         guardarButton.addActionListener(e -> guardarAtencion());
         cancelarButton.addActionListener(e -> dispose());
