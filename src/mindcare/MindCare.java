@@ -13,13 +13,11 @@ public class MindCare {
     private static void verificarYCrearSeeds() {
         boolean cargarSeeds = false;
 
-        // Verificar psicologos.txt
         File archivoPsicologos = new File("psicologos.txt");
         if (!archivoPsicologos.exists() || archivoPsicologos.length() == 0) {
             cargarSeeds = true;
         }
 
-        // Verificar pacientes.txt
         File archivoPacientes = new File("pacientes.txt");
         if (!archivoPacientes.exists() || archivoPacientes.length() == 0) {
             cargarSeeds = true;
