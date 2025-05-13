@@ -22,9 +22,9 @@ public class GestorArchivos {
     public static void guardarEnArchivo(String nombreArchivo, String contenido) {
         try (FileWriter writer = new FileWriter(nombreArchivo, true)) {
             writer.write(contenido + "\n");
-            System.out.println("✅ Guardado en " + nombreArchivo);
+            System.out.println("Guardado en " + nombreArchivo);
         } catch (IOException e) {
-            System.out.println("❌ Error al guardar en " + nombreArchivo + ": " + e.getMessage());
+            System.out.println("Error al guardar en " + nombreArchivo + ": " + e.getMessage());
         }
     }
 
@@ -43,7 +43,7 @@ public class GestorArchivos {
                 lineas.add(linea);
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al leer " + nombreArchivo + ": " + e.getMessage());
+            System.out.println("Error al leer " + nombreArchivo + ": " + e.getMessage());
         }
 
         return lineas;
@@ -59,16 +59,16 @@ public class GestorArchivos {
                 if (linea.equals(viejoRegistro)) {
                     writer.write(nuevoRegistro + "\n");
                     encontrado = true;
-                    System.out.println("✅ Registro actualizado.");
+                    System.out.println("Registro actualizado.");
                 } else {
                     writer.write(linea + "\n");
                 }
             }
             if (!encontrado) {
-                System.out.println("❌ Registro no encontrado para actualizar.");
+                System.out.println("Registro no encontrado para actualizar.");
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al actualizar registro: " + e.getMessage());
+            System.out.println("Error al actualizar registro: " + e.getMessage());
         }
     }
 
@@ -86,12 +86,12 @@ public class GestorArchivos {
                 }
             }
             if (eliminado) {
-                System.out.println("✅ Registro eliminado.");
+                System.out.println("Registro eliminado.");
             } else {
-                System.out.println("❌ Registro no encontrado para eliminar.");
+                System.out.println("Registro no encontrado para eliminar.");
             }
         } catch (IOException e) {
-            System.out.println("❌ Error al eliminar registro: " + e.getMessage());
+            System.out.println("Error al eliminar registro: " + e.getMessage());
         }
     }
 
@@ -99,9 +99,9 @@ public class GestorArchivos {
     public static void limpiarArchivo(String nombreArchivo) {
         try (FileWriter writer = new FileWriter(nombreArchivo, false)) {
             writer.write("");  // Sobrescribe el archivo con nada, lo limpia
-            System.out.println("✅ Archivo " + nombreArchivo + " limpiado.");
+            System.out.println("Archivo " + nombreArchivo + " limpiado.");
         } catch (IOException e) {
-            System.out.println("❌ Error al limpiar el archivo: " + e.getMessage());
+            System.out.println("Error al limpiar el archivo: " + e.getMessage());
         }
     }
 }
