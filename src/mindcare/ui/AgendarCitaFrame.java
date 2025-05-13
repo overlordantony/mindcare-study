@@ -16,6 +16,8 @@ public class AgendarCitaFrame extends JFrame {
     public AgendarCitaFrame(int idPaciente) {
         this.idPaciente = idPaciente;
 
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src/mindcare/ui/assets/logo.png"));
+
         setTitle("MindCare - Agendar Cita");
         setSize(500, 450);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

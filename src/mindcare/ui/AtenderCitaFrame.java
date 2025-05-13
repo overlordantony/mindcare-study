@@ -17,6 +17,8 @@ public class AtenderCitaFrame extends JFrame {
     public AtenderCitaFrame(int idPsicologo) {
         this.idPsicologo = idPsicologo;
 
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src/mindcare/ui/assets/logo.png"));
+
         setTitle("Atender Cita");
         setSize(600, 700);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

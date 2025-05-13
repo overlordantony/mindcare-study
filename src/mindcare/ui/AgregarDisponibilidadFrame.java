@@ -15,6 +15,8 @@ public class AgregarDisponibilidadFrame extends JFrame {
     public AgregarDisponibilidadFrame(int idPsicologo) {
         this.idPsicologo = idPsicologo;
 
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src/mindcare/ui/assets/logo.png"));
+
         setTitle("MindCare - Agregar Disponibilidad");
         setSize(400, 300);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

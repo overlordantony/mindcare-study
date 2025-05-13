@@ -20,6 +20,8 @@ public class LoginFrame extends JFrame {
 
         getContentPane().setBackground(Color.WHITE);
 
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src/mindcare/ui/assets/logo.png"));
+
         JPanel mainPanel = new JPanel();
         mainPanel.setBackground(Color.WHITE);
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
