@@ -14,6 +14,8 @@ public class PsicologoMenuFrame extends JFrame {
         this.nombrePsicologo = nombrePsicologo;
         this.idPsicologo = obtenerIdPsicologoDesdeNombre(nombrePsicologo);
 
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src/mindcare/ui/assets/logo.png"));
+
         setTitle("MindCare - Menú Psicólogo");
         setSize(1100, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

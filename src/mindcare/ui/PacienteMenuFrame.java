@@ -14,6 +14,8 @@ public class PacienteMenuFrame extends JFrame {
         this.nombrePaciente = nombrePaciente;
         this.idPaciente = obtenerIdPacienteDesdeNombre(nombrePaciente);
 
+        setIconImage(Toolkit.getDefaultToolkit().getImage("src/mindcare/ui/assets/logo.png"));
+
         setTitle("MindCare - Menú Paciente");
         setSize(1100, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
