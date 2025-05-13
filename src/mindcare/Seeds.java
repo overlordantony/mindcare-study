@@ -33,6 +33,6 @@ public class Seeds {
         GestorArchivos.guardarEnArchivo("disponibilidades.txt", "3,23-05-2025H16:00");
         GestorArchivos.guardarEnArchivo("disponibilidades.txt", "3,24-05-2025H11:00");
 
-        System.out.println("✅ Seeds ejecutado. Psicólogos, pacientes y disponibilidades cargados.");
+        System.out.println("Seeds ejecutado. Psicólogos, pacientes y disponibilidades cargados.");
     }
 }

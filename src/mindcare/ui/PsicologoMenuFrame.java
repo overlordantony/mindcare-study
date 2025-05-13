@@ -15,31 +15,53 @@ public class PsicologoMenuFrame extends JFrame {
         this.idPsicologo = obtenerIdPsicologoDesdeNombre(nombrePsicologo);
 
         setTitle("MindCare - Menú Psicólogo");
-        setSize(700, 500);
+        setSize(1100, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
 
-        JPanel mainPanel = new JPanel(new BorderLayout(20, 20));
-        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-
-        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
-
-        JButton verAgendaButton = new JButton("Ver Agenda");
-        JButton atenderCitasButton = new JButton("Atender Citas");
-        JButton agregarDisponibilidadButton = new JButton("Agregar Disponibilidad");
-        JButton cerrarSesionButton = new JButton("Cerrar Sesión");
-
+        Color labelColor = Color.decode("#4B4B4B");
+        Color buttonColor = Color.decode("#1E90FF");
         Font buttonFont = new Font("Segoe UI", Font.PLAIN, 16);
-        verAgendaButton.setFont(buttonFont);
-        atenderCitasButton.setFont(buttonFont);
-        agregarDisponibilidadButton.setFont(buttonFont);
-        cerrarSesionButton.setFont(buttonFont);
 
-        buttonsPanel.add(verAgendaButton);
-        buttonsPanel.add(atenderCitasButton);
-        buttonsPanel.add(agregarDisponibilidadButton);
-        buttonsPanel.add(cerrarSesionButton);
+        JPanel mainPanel = new JPanel(new BorderLayout(10, 10));
+        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20)); // Espacio superior e inferior reducido
 
+        // Logo
+        ImageIcon logoIcon = new ImageIcon("src/mindcare/ui/assets/logo.png");
+        Image image = logoIcon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+        JLabel logoLabel = new JLabel(new ImageIcon(image));
+        JPanel logoPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        logoPanel.setBackground(Color.WHITE);
+        logoPanel.add(logoLabel);
+
+        // Bienvenida
+        JLabel bienvenidaLabel = new JLabel("Bienvenido, Dr./Dra. " + this.nombrePsicologo);
+        bienvenidaLabel.setForeground(labelColor);
+        bienvenidaLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        bienvenidaLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(Color.WHITE);
+        topPanel.add(bienvenidaLabel, BorderLayout.CENTER);
+        topPanel.add(logoPanel, BorderLayout.EAST);
+
+        // Botones
+        JPanel buttonsWrapper = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 15));
+        buttonsWrapper.setBackground(Color.WHITE);
+
+        JButton verAgendaButton = createStyledButton("Ver Agenda", buttonColor, buttonFont);
+        JButton atenderCitasButton = createStyledButton("Atender Citas", buttonColor, buttonFont);
+        JButton agregarDisponibilidadButton = createStyledButton("Agregar Disponibilidad", buttonColor, buttonFont);
+        JButton cerrarSesionButton = createStyledButton("Cerrar Sesión", buttonColor, buttonFont);
+
+        buttonsWrapper.add(verAgendaButton);
+        buttonsWrapper.add(atenderCitasButton);
+        buttonsWrapper.add(agregarDisponibilidadButton);
+        buttonsWrapper.add(cerrarSesionButton);
+
+        // Área de texto
         textArea = new JTextArea("Aquí se mostrará la información de agenda o citas...");
         textArea.setEditable(false);
         textArea.setFont(new Font("Consolas", Font.PLAIN, 14));
@@ -47,68 +69,89 @@ public class PsicologoMenuFrame extends JFrame {
         textArea.setWrapStyleWord(true);
 
         JScrollPane scrollPane = new JScrollPane(textArea);
-        scrollPane.setPreferredSize(new Dimension(650, 300));
+        scrollPane.setPreferredSize(new Dimension(1000, 300));
 
-        JLabel bienvenidaLabel = new JLabel("Bienvenido, Dr./Dra. " + this.nombrePsicologo);
-        bienvenidaLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        bienvenidaLabel.setFont(new Font("Segoe UI", Font.BOLD, 24));
+        // Centro
+        JPanel centerPanel = new JPanel(new BorderLayout());
+        centerPanel.setBackground(Color.WHITE);
+        centerPanel.add(buttonsWrapper, BorderLayout.NORTH);
+        centerPanel.add(scrollPane, BorderLayout.CENTER);
 
-        mainPanel.add(bienvenidaLabel, BorderLayout.NORTH);
-        mainPanel.add(buttonsPanel, BorderLayout.CENTER);
-        mainPanel.add(scrollPane, BorderLayout.SOUTH);
+        mainPanel.add(topPanel, BorderLayout.NORTH);
+        mainPanel.add(centerPanel, BorderLayout.CENTER);
 
         add(mainPanel);
         setVisible(true);
 
-        // Acciones de botones
+        // Acciones
         verAgendaButton.addActionListener(e -> mostrarAgenda());
-        atenderCitasButton.addActionListener(e -> {
-            new AtenderCitaFrame(idPsicologo);
-        });        
-        agregarDisponibilidadButton.addActionListener(e -> {
-            new AgregarDisponibilidadFrame(idPsicologo);
-        });
-        
-        cerrarSesionButton.addActionListener(e -> {
-            String[] opciones = {"Sí", "No"};
-            int opcion = JOptionPane.showOptionDialog(
-                    this,
-                    "¿Estás seguro que quieres cerrar sesión?",
-                    "Cerrar Sesión",
-                    JOptionPane.YES_NO_OPTION,
-                    JOptionPane.QUESTION_MESSAGE,
-                    null,
-                    opciones,
-                    opciones[0]
-            );
-        
-            if (opcion == JOptionPane.YES_OPTION) {
-                new LoginFrame();
-                dispose();
+        atenderCitasButton.addActionListener(e -> new AtenderCitaFrame(idPsicologo));
+        agregarDisponibilidadButton.addActionListener(e -> new AgregarDisponibilidadFrame(idPsicologo));
+        cerrarSesionButton.addActionListener(e -> cerrarSesion());
+    }
+
+    private JButton createStyledButton(String text, Color bgColor, Font font) {
+        JButton button = new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                super.paintComponent(g2);
+                g2.dispose();
             }
-        });
+
+            @Override
+            public void setContentAreaFilled(boolean b) {}
+        };
+
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setBackground(bgColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setFont(font);
+        button.setPreferredSize(new Dimension(220, 40));
+        return button;
+    }
+
+    private void cerrarSesion() {
+        String[] opciones = {"Sí", "No"};
+        UIManager.put("OptionPane.background", Color.WHITE);
+        UIManager.put("Panel.background", Color.WHITE);
+
+        int opcion = JOptionPane.showOptionDialog(
+                this,
+                "¿Estás seguro que quieres cerrar sesión?",
+                "Cerrar Sesión",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opciones,
+                opciones[0]
+        );
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            new LoginFrame();
+            dispose();
+        }
     }
 
     private int obtenerIdPsicologoDesdeNombre(String nombre) {
         for (String linea : GestorArchivos.leerArchivo("psicologos.txt")) {
             String[] partes = linea.split(",");
-            if (partes.length >= 2) {
-                if (partes[1].equalsIgnoreCase(nombre)) {
-                    return Integer.parseInt(partes[0]);
-                }
+            if (partes.length >= 2 && partes[1].equalsIgnoreCase(nombre)) {
+                return Integer.parseInt(partes[0]);
             }
         }
-        return -1; // No encontrado
+        return -1;
     }
 
     private String obtenerNombrePaciente(int idPaciente) {
         for (String linea : GestorArchivos.leerArchivo("pacientes.txt")) {
             String[] partes = linea.split(",");
-            if (partes.length >= 2) {
-                int idArchivo = Integer.parseInt(partes[0]);
-                if (idArchivo == idPaciente) {
-                    return partes[1];
-                }
+            if (partes.length >= 2 && Integer.parseInt(partes[0]) == idPaciente) {
+                return partes[1];
             }
         }
         return "Desconocido";
@@ -118,7 +161,7 @@ public class PsicologoMenuFrame extends JFrame {
         textArea.setText("=== MI AGENDA ===\n\n");
 
         if (idPsicologo == -1) {
-            textArea.append("❌ No se encontró el psicólogo.\n");
+            textArea.append("No se encontró el psicólogo.\n");
             return;
         }
 

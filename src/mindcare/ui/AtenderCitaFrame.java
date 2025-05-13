@@ -18,68 +18,114 @@ public class AtenderCitaFrame extends JFrame {
         this.idPsicologo = idPsicologo;
 
         setTitle("Atender Cita");
-        setSize(600, 600);
+        setSize(600, 700);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
+        setResizable(false);
 
-        JPanel mainPanel = new JPanel(new BorderLayout(20, 20));
+        // Colores y fuentes
+        Color labelColor = Color.decode("#4B4B4B");
+        Color buttonColor = Color.decode("#1E90FF");
+        Font labelFont = new Font("Segoe UI", Font.PLAIN, 16);
+        Font buttonFont = new Font("Segoe UI", Font.PLAIN, 16);
+
+        JPanel mainPanel = new JPanel();
+        mainPanel.setBackground(Color.WHITE);
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Selector de citas
-        JPanel topPanel = new JPanel(new BorderLayout(10, 10));
         JLabel citaLabel = new JLabel("Seleccione una cita:");
+        citaLabel.setForeground(labelColor);
+        citaLabel.setFont(labelFont);
+        citaLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         citasComboBox = new JComboBox<>();
+        citasComboBox.setMaximumSize(new Dimension(500, 30));
         cargarCitasAgendadas();
-        topPanel.add(citaLabel, BorderLayout.NORTH);
-        topPanel.add(citasComboBox, BorderLayout.CENTER);
 
-        // Centro: áreas de texto
-        JPanel centerPanel = new JPanel(new GridLayout(2, 1, 10, 10));
+        mainPanel.add(citaLabel);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(citasComboBox);
+        mainPanel.add(Box.createVerticalStrut(20));
 
-        // Panel para notas
-        JPanel notaPanel = new JPanel(new BorderLayout(5, 5));
+        // Notas
         JLabel notaLabel = new JLabel("Notas:");
-        notaArea = new JTextArea();
+        notaLabel.setForeground(labelColor);
+        notaLabel.setFont(labelFont);
+        notaLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        notaArea = new JTextArea(5, 40);
         notaArea.setFont(new Font("Consolas", Font.PLAIN, 14));
         notaArea.setLineWrap(true);
         notaArea.setWrapStyleWord(true);
         JScrollPane notaScroll = new JScrollPane(notaArea);
 
-        notaPanel.add(notaLabel, BorderLayout.NORTH);
-        notaPanel.add(notaScroll, BorderLayout.CENTER);
+        mainPanel.add(notaLabel);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(notaScroll);
+        mainPanel.add(Box.createVerticalStrut(20));
 
-        // Panel para diagnóstico
-        JPanel diagnosticoPanel = new JPanel(new BorderLayout(5, 5));
+        // Diagnóstico
         JLabel diagnosticoLabel = new JLabel("Diagnóstico:");
-        diagnosticoArea = new JTextArea();
+        diagnosticoLabel.setForeground(labelColor);
+        diagnosticoLabel.setFont(labelFont);
+        diagnosticoLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        diagnosticoArea = new JTextArea(5, 40);
         diagnosticoArea.setFont(new Font("Consolas", Font.PLAIN, 14));
         diagnosticoArea.setLineWrap(true);
         diagnosticoArea.setWrapStyleWord(true);
         JScrollPane diagnosticoScroll = new JScrollPane(diagnosticoArea);
 
-        diagnosticoPanel.add(diagnosticoLabel, BorderLayout.NORTH);
-        diagnosticoPanel.add(diagnosticoScroll, BorderLayout.CENTER);
+        mainPanel.add(diagnosticoLabel);
+        mainPanel.add(Box.createVerticalStrut(5));
+        mainPanel.add(diagnosticoScroll);
+        mainPanel.add(Box.createVerticalStrut(30));
 
-        centerPanel.add(notaPanel);
-        centerPanel.add(diagnosticoPanel);
+        // Botones en horizontal
+        JPanel buttonsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
+        buttonsPanel.setBackground(Color.WHITE);
 
-        // Botones
-        JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 10));
-        JButton guardarButton = new JButton("Guardar");
-        JButton cancelarButton = new JButton("Cancelar");
+        JButton guardarButton = createStyledButton("Guardar", buttonColor, buttonFont);
+        JButton cancelarButton = createStyledButton("Cancelar", buttonColor, buttonFont);
 
         guardarButton.addActionListener(e -> guardarAtencion());
         cancelarButton.addActionListener(e -> dispose());
 
-        bottomPanel.add(guardarButton);
-        bottomPanel.add(cancelarButton);
+        buttonsPanel.add(guardarButton);
+        buttonsPanel.add(cancelarButton);
 
-        mainPanel.add(topPanel, BorderLayout.NORTH);
-        mainPanel.add(centerPanel, BorderLayout.CENTER);
-        mainPanel.add(bottomPanel, BorderLayout.SOUTH);
+        mainPanel.add(buttonsPanel);
 
         add(mainPanel);
         setVisible(true);
+    }
+
+    private JButton createStyledButton(String text, Color bgColor, Font font) {
+        JButton button = new JButton(text) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2 = (Graphics2D) g.create();
+                g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2.setColor(getBackground());
+                g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                super.paintComponent(g2);
+                g2.dispose();
+            }
+
+            @Override
+            public void setContentAreaFilled(boolean b) {}
+        };
+
+        button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        button.setBackground(bgColor);
+        button.setForeground(Color.WHITE);
+        button.setFocusPainted(false);
+        button.setFont(font);
+        button.setPreferredSize(new Dimension(200, 45));
+        return button;
     }
 
     private void cargarCitasAgendadas() {
@@ -119,14 +165,14 @@ public class AtenderCitaFrame extends JFrame {
     private void guardarAtencion() {
         int selectedIndex = citasComboBox.getSelectedIndex();
         if (selectedIndex == -1) {
-            JOptionPane.showMessageDialog(this, "❌ Debe seleccionar una cita.");
+            JOptionPane.showMessageDialog(this, "Debe seleccionar una cita.");
             return;
         }
 
         String nota = notaArea.getText().trim();
         String diagnostico = diagnosticoArea.getText().trim();
         if (nota.isEmpty() && diagnostico.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "❌ Debe escribir al menos una nota o diagnóstico.");
+            JOptionPane.showMessageDialog(this, "Debe escribir al menos una nota o diagnóstico.");
             return;
         }
 
@@ -135,7 +181,7 @@ public class AtenderCitaFrame extends JFrame {
         actualizarEstadoCita(idCita);
         actualizarHistorial(idCita, nota, diagnostico);
 
-        JOptionPane.showMessageDialog(this, "✅ Cita atendida y historial actualizado.");
+        JOptionPane.showMessageDialog(this, "Cita atendida y historial actualizado.");
         dispose();
     }
 
@@ -197,7 +243,10 @@ public class AtenderCitaFrame extends JFrame {
         }
 
         if (!historialActualizado) {
-            String nuevoHistorial = idPaciente + "," + (nota.isEmpty() ? "" : nota) + "," + (diagnostico.isEmpty() ? "" : diagnostico) + "," + idCita;
+            String nuevoHistorial = idPaciente + "," + 
+                (nota.isEmpty() ? "" : nota) + "," + 
+                (diagnostico.isEmpty() ? "" : diagnostico) + "," + 
+                idCita;
             nuevosHistoriales.add(nuevoHistorial);
         }
 
