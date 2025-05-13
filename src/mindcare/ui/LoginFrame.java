@@ -17,7 +17,7 @@ public class LoginFrame extends JFrame {
         setTitle("MindCare - Login");
         setSize(400, 250);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // Centrar pantalla
+        setLocationRelativeTo(null);
 
         // Crear componentes
         JLabel correoLabel = new JLabel("Correo:");
@@ -80,9 +80,8 @@ public class LoginFrame extends JFrame {
                     autenticado = true;
                     JOptionPane.showMessageDialog(this, "✅ Bienvenido paciente " + partes[1]);
                     
-                    // Abrir menú de paciente
                     new PacienteMenuFrame(partes[1]);
-                    dispose(); // Cierra LoginFrame
+                    dispose();
                     return;
                 }
             }
@@ -99,9 +98,8 @@ public class LoginFrame extends JFrame {
                     autenticado = true;
                     JOptionPane.showMessageDialog(this, "✅ Bienvenido psicólogo " + partes[1]);
                     
-                    // Abrir menú de psicólogo
                     new PsicologoMenuFrame(partes[1]);
-                    dispose(); // Cierra LoginFrame
+                    dispose();
                     return;
                 }
             }

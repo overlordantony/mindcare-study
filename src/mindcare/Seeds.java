@@ -2,7 +2,6 @@ package mindcare;
 
 public class Seeds {
     public static void main(String[] args) {
-        // Limpiar archivos para no duplicar
         GestorArchivos.limpiarArchivo("psicologos.txt");
         GestorArchivos.limpiarArchivo("pacientes.txt");
         GestorArchivos.limpiarArchivo("citas.txt");
@@ -14,7 +13,7 @@ public class Seeds {
         Psicologo p2 = new Psicologo(2, "Juan Pérez", "juan@correo.com", "abcd", "Infantil");
         Psicologo p3 = new Psicologo(3, "Laura Gómez", "laura@correo.com", "5678", "Adolescente");
 
-        // Guardar psicólogos (sin disponibilidades en el objeto)
+        // Guardar psicólogos
         GestorArchivos.guardarEnArchivo("psicologos.txt", p1.toString());
         GestorArchivos.guardarEnArchivo("psicologos.txt", p2.toString());
         GestorArchivos.guardarEnArchivo("psicologos.txt", p3.toString());

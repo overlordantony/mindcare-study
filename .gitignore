@@ -23,3 +23,10 @@
 hs_err_pid*
 replay_pid*
 /build/
+
+# Persistence files
+citas.txt
+disponibilidades.txt
+historiales.txt
+pacientes.txt
+psicologos.txt

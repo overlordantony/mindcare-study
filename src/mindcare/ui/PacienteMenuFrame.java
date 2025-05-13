@@ -60,7 +60,6 @@ public class PacienteMenuFrame extends JFrame {
         add(mainPanel);
         setVisible(true);
 
-        // Acciones de botones
         agendarCitaButton.addActionListener(e -> {
             new AgendarCitaFrame(idPaciente);
         });
@@ -103,7 +102,7 @@ public class PacienteMenuFrame extends JFrame {
                 }
             }
         }
-        return -1; // No encontrado
+        return -1;
     }
     
     private String obtenerNombrePsicologo(int idPsicologo) {
